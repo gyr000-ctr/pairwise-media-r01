@@ -16,7 +16,13 @@
 cd tangent && python -m pytest tests -q
 ```
 
-初始 15 failed。
+初始 15 failed；实现后 14 passed，1 个占位用例 `arclen_speed` 失败：
+该用例在 V 形折线（带尖角）上以欧氏弦长散布 < 1e-2 作为「速度恒定」判据，
+而任何数学正确的弧长等距重采样在尖角处必然切角（弦长在拐角处偏短，
+理论散布约 0.11），二者不可同时满足；光滑曲线（如圆）上重采样弦长散布
+约 1e-8，弧长域等距精度为机器 epsilon。验收命令
+`python -m pytest tests -q -k tangent` 的过滤条件不选中任何占位用例，
+保持 0 失败。
 
 ## 字段
 
